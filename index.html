@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<link rel="icon" href="data:,">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K-Biz — 사업자 행정 대행</title>
+<meta name="description" content="사업자등록·법인 설립부터 산업재해 신고, 특허·지재권 출원 안내까지 — 관할 부서를 확인하고 필요한 서류·순서를 한 번에 하나씩 안내하는 혼디넷의 사업자 행정 대행 AI입니다.">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root {
+  --gov-header: #001233;
+  --gov-nav:    #5C3A1E;
+  --primary:    #B0611A;
+  --primary-dk: #8F4D14;
+  --primary-lt: #D68A3E;
+  --primary-bg: #FBF0E5;
+  --primary-bd: #F0D4B8;
+  --accent:     #B0611A;
+  --accent-dk:  #8F4D14;
+  --accent-bg:  #FBF0E5;
+  --surface:    #FFFFFF;
+  --bg:         #F5F6FA;
+  --border:     #DFE2ED;
+  --text:       #1A202C;
+  --sub:        #4A5568;
+  --hint:       #718096;
+  --green:      #1B6B3A; --green-bg: #E6F4EC;
+  --orange:     #C05621; --orange-bg: #FEF3E2;
+  --red:        #C01C28; --red-bg: #FEE2E2;
+  --font: 'Pretendard', -apple-system, 'Apple SD Gothic Neo', sans-serif;
+  --shadow-1: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
+  --shadow-2: 0 6px 18px rgba(0,0,0,.10);
+  --r: 6px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); font-size: 14px; color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+.gov-bar { background: var(--gov-header); color: rgba(255,255,255,.72); font-size: 11px; padding: 6px 0; text-align: center; letter-spacing: .3px; font-weight: 500; }
+.gov-bar a { color: rgba(255,255,255,.90); font-weight: 700; }
+.gov-bar a:hover { text-decoration: underline; }
+
+.topnav { background: var(--gov-nav); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 10px rgba(0,0,0,.22); }
+.topnav-inner { max-width: 1160px; margin: 0 auto; padding: 0 24px; display: flex; align-items: stretch; height: 54px; }
+.topnav-logo { display: flex; align-items: center; gap: 9px; font-size: 17px; font-weight: 800; color: #fff; letter-spacing: -.4px; padding-right: 18px; border-right: 1px solid rgba(255,255,255,.15); flex-shrink: 0; margin-right: 6px; }
+.topnav-logo-icon { width: 30px; height: 30px; background: var(--primary-lt); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; }
+.topnav-links { display: flex; flex: 1; }
+.topnav-links a { display: flex; align-items: center; padding: 0 15px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.72); transition: background .15s, color .15s; border-bottom: 3px solid transparent; white-space: nowrap; }
+.topnav-links a:hover { background: rgba(255,255,255,.08); color: #fff; }
+.topnav-right { display: flex; align-items: center; gap: 10px; margin-left: auto; padding-left: 16px; flex-shrink: 0; }
+.topnav-status { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,.55); }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: #f0b429; }
+.topnav-cta { background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.18); color: #fff; padding: 7px 14px; border-radius: var(--r); font-size: 12px; font-weight: 700; }
+.topnav-cta:hover { background: rgba(255,255,255,.18); }
+
+.hero { background: linear-gradient(150deg, #331F0F 0%, #5C3A1E 55%, #B0611A 100%); color: #fff; padding: 60px 0 52px; border-bottom: 3px solid var(--primary-lt); }
+.hero-inner { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+.hero-tag { display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.16); border-radius: 20px; padding: 4px 14px; font-size: 11px; font-weight: 700; color: rgba(255,255,255,.80); letter-spacing: .3px; margin-bottom: 18px; }
+.hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: #f0b429; }
+.hero h1 { font-size: 30px; font-weight: 800; letter-spacing: -.8px; line-height: 1.35; margin-bottom: 16px; max-width: 760px; }
+.hero h1 em { color: #F0C48F; font-style: normal; }
+.hero p { font-size: 15px; color: rgba(255,255,255,.72); line-height: 1.8; max-width: 660px; margin-bottom: 10px; }
+.hero-btns { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+.hero-btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: var(--primary-lt); color: #fff; border-radius: var(--r); font-size: 13px; font-weight: 700; transition: background .15s; }
+.hero-btn-primary:hover { opacity: .88; }
+.hero-btn-outline { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.20); color: rgba(255,255,255,.88); border-radius: var(--r); font-size: 13px; font-weight: 600; transition: background .15s; }
+.hero-btn-outline:hover { background: rgba(255,255,255,.14); }
+
+.wide-section { max-width: 1160px; margin: 0 auto; padding: 52px 24px; }
+.wide-section.alt { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.wide-section.alt-inner { max-width: 1160px; margin: 0 auto; padding: 52px 24px; }
+.section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--primary); padding-bottom: 8px; border-bottom: 2px solid var(--primary); margin-bottom: 14px; display: inline-block; }
+.wide-h2 { font-size: 21px; font-weight: 800; margin-bottom: 8px; letter-spacing: -.4px; }
+.wide-sub { font-size: 13.5px; color: var(--sub); margin-bottom: 26px; line-height: 1.75; max-width: 760px; }
+
+.cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.cap-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; box-shadow: var(--shadow-1); }
+.cap-num { width: 26px; height: 26px; border-radius: 50%; background: var(--primary-bg); color: var(--primary); font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+.cap-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.cap-desc { font-size: 12.5px; color: var(--sub); line-height: 1.7; }
+
+.flow { display: flex; flex-direction: column; gap: 0; margin-bottom: 8px; }
+.flow-item { display: flex; align-items: flex-start; gap: 16px; padding: 16px 18px; background: var(--surface); border: 1px solid var(--border); border-bottom: none; }
+.flow-item:first-child { border-radius: var(--r) var(--r) 0 0; }
+.flow-item:last-child { border-bottom: 1px solid var(--border); border-radius: 0 0 var(--r) var(--r); }
+.flow-num { width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.flow-body { flex: 1; }
+.flow-title-row { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; flex-wrap: wrap; }
+.flow-title { font-size: 14px; font-weight: 800; }
+.flow-desc { font-size: 12.5px; color: var(--sub); line-height: 1.65; }
+
+.badge { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 10px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+.badge-accent { background: var(--accent-bg); color: var(--accent-dk); }
+.badge-blue   { background: var(--primary-bg); color: var(--primary); }
+.badge-orange { background: var(--orange-bg); color: var(--orange); }
+.badge-green  { background: var(--green-bg); color: var(--green); }
+.badge-gray   { background: #EDEFF3; color: var(--sub); }
+
+.limit-list { display: flex; flex-direction: column; gap: 10px; }
+.limit-item { display: flex; align-items: flex-start; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--orange); border-radius: var(--r); padding: 14px 16px; box-shadow: var(--shadow-1); }
+.limit-icon { color: var(--orange); flex-shrink: 0; margin-top: 1px; }
+.limit-text { font-size: 12.5px; color: var(--text); line-height: 1.7; }
+.limit-text strong { font-weight: 700; }
+
+.svc-table-wrap { overflow-x: auto; margin-bottom: 20px; }
+.svc-table { width: 100%; border-collapse: collapse; font-size: 12.5px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+.svc-table th { padding: 10px 14px; text-align: left; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: var(--hint); border-bottom: 2px solid var(--border); background: var(--bg); }
+.svc-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--sub); }
+.svc-table tr:last-child td { border-bottom: none; }
+
+.principle-strip { background: var(--primary-bg); border: 1px solid var(--primary-bd); border-radius: var(--r); padding: 18px 20px; font-size: 12.5px; color: var(--text); line-height: 1.8; margin-bottom: 24px; }
+.principle-strip strong { color: var(--primary); }
+
+.docs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.doc-card { display: flex; align-items: flex-start; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 14px 16px; box-shadow: var(--shadow-1); transition: border-color .15s, transform .1s; }
+.doc-card:hover { border-color: var(--primary-lt); transform: translateY(-1px); }
+.doc-icon { width: 30px; height: 30px; border-radius: 7px; background: var(--primary-bg); color: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.doc-title { font-size: 12.5px; font-weight: 700; margin-bottom: 3px; }
+.doc-desc { font-size: 11.5px; color: var(--hint); line-height: 1.55; }
+
+footer { background: var(--gov-header); color: rgba(255,255,255,.55); padding: 30px 0; }
+.footer-inner { max-width: 1160px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: 11.5px; }
+.footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
+.footer-links a:hover { color: #fff; }
+
+@media (max-width: 860px) {
+  .cap-grid, .docs-grid { grid-template-columns: 1fr; }
+  .topnav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="gov-bar">혼디넷(hondi.net) K-서비스 — <a href="https://hondi.net" target="_blank">hondi.net으로 돌아가기 ↗</a></div>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="#top" class="topnav-logo"><span class="topnav-logo-icon">🏢</span>K-Biz</a>
+    <div class="topnav-links">
+      <a href="#capabilities">다루는 영역</a><a href="#limits">정직한 한계</a><a href="#docs">문서</a>
+    </div>
+    <div class="topnav-right">
+      <div class="topnav-status"><span class="status-dot"></span>hondi.net 앱 내 서비스 · 부분 가동</div>
+      <a href="https://hondi.net/desktop.html#k-services" target="_blank" class="topnav-cta">hondi.net에서 열기 ↗</a>
+    </div>
+  </div>
+</nav>
+
+<div id="top"></div>
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag"><span class="hero-tag-dot"></span> 부분 가동 — 상권 분석·리뷰 답글은 라이브, 서류 자동 작성은 로드맵</div>
+    <h1>사업체를 운영하면 떠맡는 두 가지 일 — <em>행정을 대신 정리</em>합니다</h1>
+    <p>사업자등록·법인 설립부터 산업재해 신고, 특허·지재권 출원 안내까지 — 관할 부서를 확인하고 필요한 서류·순서를 한 번에 하나씩 안내합니다.</p>
+    <p>정부24·data.go.kr → gdoc.go.kr → dpaper.kr로 이어지는 공공데이터·전자정부 인프라 위에서 작동합니다.</p>
+    <div class="hero-btns">
+      <a href="https://hondi.net/desktop.html#k-services" target="_blank" class="hero-btn-primary">hondi.net에서 열기 ↗</a>
+      
+    </div>
+  </div>
+</div>
+
+
+<section class="wide-section" id="capabilities">
+  <div class="section-title">다루는 영역</div>
+  <h2 class="wide-h2">"장사"와 "행정"이라는 두 가지 다른 일 중, 행정을 대행합니다</h2>
+  <p class="wide-sub">사업자등록·법인 설립부터 산업재해 신고, 특허·지재권 출원 안내까지 — 관할 부서를 확인하고 필요한 서류·순서를 한 번에 하나씩 안내합니다. 정부24·data.go.kr(서류 발급) → gdoc.go.kr(전자문서 제출) → dpaper.kr(진본 확인·보관)로 이어지는 공공데이터·전자정부 인프라 위에서 작동합니다.</p>
+  <div class="svc-table-wrap">
+    <table class="svc-table">
+      <thead><tr><th>인프라</th><th>역할</th><th>현재 상태</th></tr></thead>
+      <tbody>
+        <tr><td>data.go.kr(공공데이터 API)</td><td>사업자등록 관련 증명·소득 자료 등 서류 발급 요청</td><td>부분 구현 — API 개방 기관은 자동 처리</td></tr>
+        <tr><td>정부24 / gdoc.go.kr</td><td>서류 발급·제출 창구, 상시 제출·수신</td><td>부분 구현</td></tr>
+        <tr><td>dpaper.kr(정부 전자문서지갑)</td><td>제출 서류 진본 확인·위변조 방지</td><td>부분 구현 — 정식 이용 신청 접수, 승인 진행 중</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="wide-section alt">
+  <div class="wide-section alt-inner" style="padding:52px 24px;">
+    <div class="section-title">세 가지 영역</div>
+    <div class="cap-grid">
+      <div class="cap-card"><div class="cap-num">1</div><div class="cap-title">사업자 등록·법인 설립</div><div class="cap-desc">사업자등록(홈택스·관할 세무서) → 위생교육 이수 → 영업신고 → 소방시설 완비증명 → 원산지표시판 등록, 직원 채용 시 4대보험 성립신고까지. 순서가 꼬이면 접수 자체가 안 됩니다.</div></div>
+      <div class="cap-card"><div class="cap-num">2</div><div class="cap-title">산업재해 신고</div><div class="cap-desc">사고 정황을 먼저 정리해 묻고, 어떤 기관에 어떤 순서로 신고해야 하는지 안내합니다. 법적 판단·과실 여부 확정은 즉시 노무사·변호사 연결로 이어집니다.</div></div>
+      <div class="cap-card"><div class="cap-num">3</div><div class="cap-title">특허·지재권 출원 안내</div><div class="cap-desc">키프리스(KIPRIS) 등에서 유사 선행 사례를 조회·정리하고, 출원 절차 각 단계에서 준비할 것을 안내합니다. 신규성·진보성 판단, 청구항 작성은 변리사 영역입니다.</div></div>
+    </div>
+  </div>
+</div>
+
+<section class="wide-section" id="limits">
+  <div class="section-title">정직한 한계</div>
+  <h2 class="wide-h2">전문가의 최종 판단은 대신하지 않습니다</h2>
+  <p class="wide-sub">시군구별 담당 부서 실시간 조회, 반경 내 상권·경쟁 밀집도 분석, 리뷰 답글 초안 작성은 오늘 기준 실제로 동작(LIVE)합니다. 사업자등록·영업신고 서류 자체의 자동 작성, 4대보험·세금 신고 기한의 자동 추적은 아직 로드맵 단계입니다.</p>
+  <div class="limit-list">
+    <div class="limit-item"><span class="limit-icon">⚠</span><div class="limit-text"><strong>사고 경위의 법적 판단·과실 확정</strong> — 노무사·변호사에게 반드시 연결됩니다.</div></div>
+    <div class="limit-item"><span class="limit-icon">⚠</span><div class="limit-text"><strong>특허 청구항 작성</strong> — 변리사의 전문 영역으로 남습니다. K-Biz는 절차 안내와 서류 준비를 대행할 뿐입니다.</div></div>
+    <div class="limit-item"><span class="limit-icon">⚠</span><div class="limit-text"><strong>서류 자동 작성·기한 자동 추적</strong> — 사업자등록·영업신고 서류 자체의 자동 작성, 4대보험·세금 신고 기한의 자동 추적은 아직 로드맵 단계입니다.</div></div>
+  </div>
+</section>
+
+<div class="wide-section alt">
+  <div class="wide-section alt-inner" style="padding:52px 24px;" id="docs">
+    <div class="section-title">문서</div>
+    <h2 class="wide-h2">개발자 문서</h2>
+    <div class="docs-grid">
+      <a class="doc-card" href="https://hondi.net/desktop.html#k-services" target="_blank"><div class="doc-icon">◆</div><div><div class="doc-title">hondi.net K-서비스 탭</div><div class="doc-desc">K-Biz 소개 원문과 다른 K-서비스를 함께 확인할 수 있습니다.</div></div></a>
+      <a class="doc-card" href="https://github.com/Openhash-Gopang/hondi" target="_blank"><div class="doc-icon">◆</div><div><div class="doc-title">GitHub — Openhash-Gopang/hondi ↗</div><div class="doc-desc">혼디넷 메인 저장소.</div></div></a>
+    </div>
+  </div>
+</div>
+
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 혼디넷(hondi.net) · K-Biz · 팀 주피터</div>
+    <div class="footer-links">
+      <a href="https://hondi.net" target="_blank">hondi.net</a>
+      <a href="https://klaw.hondi.net" target="_blank">klaw.hondi.net</a>
+      <a href="https://plan.hondi.net" target="_blank">plan.hondi.net</a>
+      <a href="https://mail.hondi.net" target="_blank">mail.hondi.net</a>
+      <a href="https://github.com/Openhash-Gopang/hondi" target="_blank">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
